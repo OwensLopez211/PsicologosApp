@@ -1,4 +1,12 @@
+import { useNavigate } from 'react-router-dom';
+
 const PsychologistCTA = () => {
+  const navigate = useNavigate();
+
+  const handleRegisterClick = () => {
+    navigate('/registro', { state: { userType: 'psychologist' } });
+  };
+
   return (
     <section className="bg-[#B4E4D3] py-16">
       <div className="container mx-auto px-6">
@@ -33,7 +41,10 @@ const PsychologistCTA = () => {
               </li>
             </ul>
 
-            <button className="bg-[#2A6877] text-white px-8 py-3 rounded-md hover:bg-[#235A67] transition-colors">
+            <button 
+              onClick={handleRegisterClick}
+              className="bg-[#2A6877] text-white px-8 py-3 rounded-md hover:bg-[#235A67] transition-colors"
+            >
               Regístrate ahora
             </button>
           </div>

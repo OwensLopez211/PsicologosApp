@@ -1,4 +1,12 @@
+import { useNavigate } from 'react-router-dom';
+
 const Hero = () => {
+  const navigate = useNavigate();
+
+  const handleSpecialistsClick = () => {
+    navigate('/especialistas');
+  };
+
   return (
       <section className="container mx-auto px-6 py-20 text-center">
         <h1 className="text-5xl font-bold text-gray-800 mb-6">
@@ -24,7 +32,10 @@ const Hero = () => {
             a una terapia psicológica de calidad al mayor número de personas posible, bajo el impulso de una marca global.
           </p>
 
-          <button className="bg-[#2A6877] text-white px-8 py-3 rounded-md hover:bg-[#235A67] transition-colors flex items-center gap-2 mx-auto">
+          <button 
+            onClick={handleSpecialistsClick}
+            className="bg-[#2A6877] text-white px-8 py-3 rounded-md hover:bg-[#235A67] transition-colors flex items-center gap-2 mx-auto"
+          >
             Agenda con tu psicólogo
           </button>
         </div>

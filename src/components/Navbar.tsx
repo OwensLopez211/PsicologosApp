@@ -1,10 +1,11 @@
 
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleNavigation = (path: string) => {
     setIsMenuOpen(false);
@@ -19,7 +20,7 @@ const Navbar = () => {
           <span className="text-gray-800 text-xl font-bold ml-2">MentAliza</span>
         </Link>
 
-        {/* Mobile menu button - Change md to lg */}
+        {/* Mobile menu button remains unchanged */}
         <button 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="lg:hidden"
@@ -33,20 +34,40 @@ const Navbar = () => {
           </svg>
         </button>
 
-        {/* Desktop menu - Change md to lg */}
+        {/* Desktop menu with NavLink */}
         <div className="hidden lg:flex items-center gap-8">
-          <Link to="/" className="text-black hover:text-[#2A6877] transition-colors font-sans text-md">
+          <NavLink 
+            to="/" 
+            className={`transition-colors font-sans text-md ${
+              location.pathname === '/' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            }`}
+          >
             Inicio
-          </Link>
-          <Link to="/especialistas" className="text-black hover:text-[#2A6877] transition-colors font-sans text-md">
+          </NavLink>
+          <NavLink 
+            to="/especialistas" 
+            className={`transition-colors font-sans text-md ${
+              location.pathname === '/especialistas' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            }`}
+          >
             Especialistas
-          </Link>
-          <Link to="/quienes-somos" className="text-black hover:text-[#2A6877] transition-colors font-sans text-md">
+          </NavLink>
+          <NavLink 
+            to="/quienes-somos" 
+            className={`transition-colors font-sans text-md ${
+              location.pathname === '/quienes-somos' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            }`}
+          >
             Quiénes somos
-          </Link>
-          <Link to="/contacto" className="text-black hover:text-[#2A6877] transition-colors font-sans text-md">
+          </NavLink>
+          <NavLink 
+            to="/contacto" 
+            className={`transition-colors font-sans text-md ${
+              location.pathname === '/contacto' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            }`}
+          >
             Contacto
-          </Link>
+          </NavLink>
           <Link to="/login" className="px-4 py-1.5 text-[#2A6877] border border-[#2A6877] rounded-md hover:bg-gray-50 transition-colors font-sans text-sm">
             Iniciar sesión
           </Link>
@@ -56,26 +77,52 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile menu - Change md to lg */}
+      {/* Mobile menu with active states */}
       <div className={`${isMenuOpen ? 'block' : 'hidden'} lg:hidden`}>
         <div className="px-4 pt-2 pb-4 space-y-3">
-          <a onClick={() => handleNavigation('/')} className="block text-black hover:text-[#2A6877] transition-colors font-sans text-md py-2 cursor-pointer">
+          <a 
+            onClick={() => handleNavigation('/')} 
+            className={`block transition-colors font-sans text-md py-2 cursor-pointer ${
+              location.pathname === '/' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            }`}
+          >
             Inicio
           </a>
-          <a onClick={() => handleNavigation('/especialistas')} className="block text-black hover:text-[#2A6877] transition-colors font-sans text-md py-2 cursor-pointer">
+          <a 
+            onClick={() => handleNavigation('/especialistas')} 
+            className={`block transition-colors font-sans text-md py-2 cursor-pointer ${
+              location.pathname === '/especialistas' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            }`}
+          >
             Especialistas
           </a>
-          <a onClick={() => handleNavigation('/quienes-somos')} className="block text-black hover:text-[#2A6877] transition-colors font-sans text-md py-2 cursor-pointer">
+          <a 
+            onClick={() => handleNavigation('/quienes-somos')} 
+            className={`block transition-colors font-sans text-md py-2 cursor-pointer ${
+              location.pathname === '/quienes-somos' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            }`}
+          >
             Quiénes somos
           </a>
-          <a onClick={() => handleNavigation('/contacto')} className="block text-black hover:text-[#2A6877] transition-colors font-sans text-md py-2 cursor-pointer">
+          <a 
+            onClick={() => handleNavigation('/contacto')} 
+            className={`block transition-colors font-sans text-md py-2 cursor-pointer ${
+              location.pathname === '/contacto' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            }`}
+          >
             Contacto
           </a>
-          <div className="space-y-2">
-            <a onClick={() => handleNavigation('/login')} className="block w-full px-4 py-1.5 text-[#2A6877] border border-[#2A6877] rounded-md hover:bg-gray-50 transition-colors font-sans text-sm text-center cursor-pointer">
+          <div className="pt-4 space-y-2">
+            <a
+              onClick={() => handleNavigation('/login')}
+              className="block w-full px-4 py-2 text-center text-[#2A6877] border border-[#2A6877] rounded-md hover:bg-gray-50 transition-colors font-sans text-sm cursor-pointer"
+            >
               Iniciar sesión
             </a>
-            <a onClick={() => handleNavigation('/registro')} className="block w-full px-4 py-1.5 text-white bg-[#2A6877] rounded-md hover:bg-[#235A67] transition-colors font-sans text-sm text-center cursor-pointer">
+            <a
+              onClick={() => handleNavigation('/registro')}
+              className="block w-full px-4 py-2 text-center text-white bg-[#2A6877] rounded-md hover:bg-[#235A67] transition-colors font-sans text-sm cursor-pointer"
+            >
               Comenzar
             </a>
           </div>
