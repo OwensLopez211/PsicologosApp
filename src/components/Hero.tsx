@@ -1,6 +1,6 @@
 const Hero = () => {
   return (
-    <section className="container mx-auto px-6 py-16 text-center">
+    <section className="container mx-auto px-6 py-20 text-center">
       <h1 className="text-5xl font-bold text-gray-800 mb-6">
         El psicólogo online que
         <br />
@@ -20,7 +20,7 @@ const Hero = () => {
           el profesional más adecuado a tus necesidades entre una amplia variedad de
           <br />
           psicólogos y psicólogas. Bienestar llegó a Chile en 2023 para seguir mejorando y facilitando el acceso
-          <br />
+         
           a una terapia psicológica de calidad al mayor número de personas posible, bajo el impulso de una marca global.
         </p>
 
