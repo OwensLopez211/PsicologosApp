@@ -13,8 +13,10 @@
     "expose": "concurrently \"npm run expose:dev\" \"npm run expose:tunnel\""
   },
   "dependencies": {
+    "framer-motion": "^12.5.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^8.56.0",
