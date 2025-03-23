@@ -1,28 +1,54 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../services/authService';
+import { useAuth } from '../context/AuthContext';
 import PageTransition from '../components/PageTransition';
 
+// Remove isCheckingAuth state and useEffect for redirection
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     remember: false
   });
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login attempt:', formData);
+    setError('');
+    setIsLoading(true);
+
+    try {
+      const response = await login(formData.email, formData.password);
+      setUser(response.user);
+      
+      // Redirect based on user type
+      switch (response.user.user_type) {
+        case 'CLIENT':
+          navigate('/dashboard');
+          break;
+        case 'PSYCHOLOGIST':
+          navigate('/psicologo/dashboard');
+          break;
+        case 'ADMIN':
+          navigate('/admin/dashboard');
+          break;
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.detail || 'Error al iniciar sesión');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <PageTransition>
       <div className="min-h-screen bg-gradient-to-b from-[#B4E4D3] to-white flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        {/* Banner at the top */}
-        <div className="absolute top-0 left-0 right-0 bg-[#B4E4D3] p-3 text-center text-[#2A6877] font-medium">
-          Con descuentos exclusivos por nuestro lanzamiento
-        </div>
-
-        <div className="sm:mx-auto sm:w-full sm:max-w-md mt-16">
+        {/* Remove AnnouncementBar component from here */}
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <Link to="/" className="block relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-[#2A6877] to-[#B4E4D3] rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
             <img
@@ -44,6 +70,11 @@ const LoginPage = () => {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-6 shadow-2xl rounded-xl sm:px-10 border border-gray-100">
+            {error && (
+              <div className="mb-4 p-3 rounded bg-red-50 border border-red-200 text-red-600 text-sm">
+                {error}
+              </div>
+            )}
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
@@ -108,9 +139,10 @@ const LoginPage = () => {
               <div>
                 <button
                   type="submit"
-                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-sm font-semibold text-white bg-[#2A6877] hover:bg-[#235A67] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2A6877] transform hover:scale-[1.02] transition-all duration-300"
+                  disabled={isLoading}
+                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-sm font-semibold text-white bg-[#2A6877] hover:bg-[#235A67] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2A6877] transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Iniciar sesión
+                  {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
                 </button>
               </div>
             </form>

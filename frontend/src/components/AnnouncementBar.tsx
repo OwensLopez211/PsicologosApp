@@ -1,4 +1,4 @@
-const TopBar = () => {
+const AnnouncementBar = () => {
   return (
     <div className="w-full bg-[#B4E4D3] py-2">
       <div className="container mx-auto px-6 text-center text-sm">
@@ -8,4 +8,4 @@ const TopBar = () => {
   );
 };
 
-export default TopBar;
+export default AnnouncementBar;

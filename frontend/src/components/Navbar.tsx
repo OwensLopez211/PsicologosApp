@@ -1,26 +1,98 @@
 
 import { useState } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { isAuthenticated, user } = useAuth();
 
   const handleNavigation = (path: string) => {
     setIsMenuOpen(false);
     navigate(path);
   };
 
+  const getDashboardLink = () => {
+    switch (user?.user_type) {
+      case 'PSYCHOLOGIST':
+        return '/psicologo/dashboard';
+      case 'ADMIN':
+        return '/admin/dashboard';
+      default:
+        return '/dashboard';
+    }
+  };
+
+  const renderAuthButtons = () => {
+    if (isAuthenticated) {
+      return (
+        <Link 
+          to={getDashboardLink()} 
+          className="px-4 py-1.5 text-white bg-[#2A6877] rounded-md hover:bg-[#235A67] transition-colors font-sans text-sm"
+        >
+          Mi Panel
+        </Link>
+      );
+    }
+
+    return (
+      <>
+        <Link 
+          to="/login" 
+          className="px-4 py-1.5 text-[#2A6877] border border-[#2A6877] rounded-md hover:bg-gray-50 transition-colors font-sans text-sm"
+        >
+          Iniciar sesión
+        </Link>
+        <Link 
+          to="/registro" 
+          className="px-4 py-1.5 text-white bg-[#2A6877] rounded-md hover:bg-[#235A67] transition-colors font-sans text-sm"
+        >
+          Comenzar
+        </Link>
+      </>
+    );
+  };
+
+  const renderMobileAuthButtons = () => {
+    if (isAuthenticated) {
+      return (
+        <a
+          onClick={() => handleNavigation(getDashboardLink())}
+          className="block w-full px-4 py-2 text-center text-white bg-[#2A6877] rounded-md hover:bg-[#235A67] transition-colors font-sans text-sm cursor-pointer"
+        >
+          Mi Panel
+        </a>
+      );
+    }
+
+    return (
+      <>
+        <a
+          onClick={() => handleNavigation('/login')}
+          className="block w-full px-4 py-2 text-center text-[#2A6877] border border-[#2A6877] rounded-md hover:bg-gray-50 transition-colors font-sans text-sm cursor-pointer"
+        >
+          Iniciar sesión
+        </a>
+        <a
+          onClick={() => handleNavigation('/registro')}
+          className="block w-full px-4 py-2 text-center text-white bg-[#2A6877] rounded-md hover:bg-[#235A67] transition-colors font-sans text-sm cursor-pointer"
+        >
+          Comenzar
+        </a>
+      </>
+    );
+  };
+
   return (
-    <nav className="w-full bg-white shadow-md font-sans">
+    <nav className="w-full bg-white shadow-md font-sans relative z-50">
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         <Link to="/" className="flex items-center">
           <img src="/logo.jpeg" alt="MentAliza" className="h-12 rounded-md" />
           <span className="text-gray-800 text-xl font-bold ml-2">MentAliza</span>
         </Link>
 
-        {/* Mobile menu button remains unchanged */}
         <button 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="lg:hidden"
@@ -34,50 +106,43 @@ const Navbar = () => {
           </svg>
         </button>
 
-        {/* Desktop menu with NavLink */}
         <div className="hidden lg:flex items-center gap-8">
           <NavLink 
             to="/" 
-            className={`transition-colors font-sans text-md ${
-              location.pathname === '/' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            className={({isActive}) => `transition-colors font-sans text-md ${
+              isActive ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
             }`}
           >
             Inicio
           </NavLink>
           <NavLink 
             to="/especialistas" 
-            className={`transition-colors font-sans text-md ${
-              location.pathname === '/especialistas' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            className={({isActive}) => `transition-colors font-sans text-md ${
+              isActive ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
             }`}
           >
             Especialistas
           </NavLink>
           <NavLink 
             to="/quienes-somos" 
-            className={`transition-colors font-sans text-md ${
-              location.pathname === '/quienes-somos' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            className={({isActive}) => `transition-colors font-sans text-md ${
+              isActive ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
             }`}
           >
             Quiénes somos
           </NavLink>
           <NavLink 
             to="/contacto" 
-            className={`transition-colors font-sans text-md ${
-              location.pathname === '/contacto' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            className={({isActive}) => `transition-colors font-sans text-md ${
+              isActive ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
             }`}
           >
             Contacto
           </NavLink>
-          <Link to="/login" className="px-4 py-1.5 text-[#2A6877] border border-[#2A6877] rounded-md hover:bg-gray-50 transition-colors font-sans text-sm">
-            Iniciar sesión
-          </Link>
-          <Link to="/registro" className="px-4 py-1.5 text-white bg-[#2A6877] rounded-md hover:bg-[#235A67] transition-colors font-sans text-sm">
-            Comenzar
-          </Link>
+          {renderAuthButtons()}
         </div>
       </div>
 
-      {/* Mobile menu with active states */}
       <div className={`${isMenuOpen ? 'block' : 'hidden'} lg:hidden`}>
         <div className="px-4 pt-2 pb-4 space-y-3">
           <a 
@@ -113,18 +178,7 @@ const Navbar = () => {
             Contacto
           </a>
           <div className="pt-4 space-y-2">
-            <a
-              onClick={() => handleNavigation('/login')}
-              className="block w-full px-4 py-2 text-center text-[#2A6877] border border-[#2A6877] rounded-md hover:bg-gray-50 transition-colors font-sans text-sm cursor-pointer"
-            >
-              Iniciar sesión
-            </a>
-            <a
-              onClick={() => handleNavigation('/registro')}
-              className="block w-full px-4 py-2 text-center text-white bg-[#2A6877] rounded-md hover:bg-[#235A67] transition-colors font-sans text-sm cursor-pointer"
-            >
-              Comenzar
-            </a>
+            {renderMobileAuthButtons()}
           </div>
         </div>
       </div>
