@@ -13,10 +13,12 @@
     "expose": "concurrently \"npm run expose:dev\" \"npm run expose:tunnel\""
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "axios": "^1.8.4",
     "framer-motion": "^12.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.5.2",
     "react-router-dom": "^7.4.0"
   },
   "devDependencies": {
