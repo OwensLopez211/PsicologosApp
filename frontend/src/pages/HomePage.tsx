@@ -7,8 +7,7 @@ import PageTransition from '../components/PageTransition'
 const HomePage = () => {
   return (
     <PageTransition>
-      <Hero />
-      <Benefits />
+      <Hero />  
       <HowItWorks />
       <PsychologistCTA />
     </PageTransition>

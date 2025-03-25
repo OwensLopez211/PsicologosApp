@@ -1,13 +1,23 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated, user } = useAuth();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleNavigation = (path: string) => {
     setIsMenuOpen(false);
@@ -86,101 +96,141 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full bg-white shadow-md font-sans relative z-50">
+    <nav className={`fixed w-full transition-all duration-300 z-40 top-8 ${
+      isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-lg' : 'bg-white/80'
+    }`}>
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
-        <Link to="/" className="flex items-center">
-          <img src="/logo.jpeg" alt="MentAliza" className="h-12 rounded-md" />
-          <span className="text-gray-800 text-xl font-bold ml-2">MentAliza</span>
+        <Link to="/" className="flex items-center space-x-3">
+          <img 
+            src="/logo.jpeg" 
+            alt="Bienestar" 
+            className="h-10 w-10 rounded-full object-cover border-2 border-[#2A6877]" 
+          />
+          <div className="flex flex-col">
+            <span className="text-[#2A6877] text-xl font-bold tracking-tight">Bienestar</span>
+            <span className="text-gray-500 text-xs">Psicología Online</span>
+          </div>
         </Link>
 
         <button 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="lg:hidden"
+          className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <motion.svg 
+            className="w-6 h-6" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+            animate={{ rotate: isMenuOpen ? 180 : 0 }}
+          >
             {isMenuOpen ? (
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             ) : (
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             )}
-          </svg>
+          </motion.svg>
         </button>
 
         <div className="hidden lg:flex items-center gap-8">
           <NavLink 
             to="/" 
-            className={({isActive}) => `transition-colors font-sans text-md ${
-              isActive ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            className={({isActive}) => `transition-colors font-medium text-sm hover:text-[#2A6877] relative group ${
+              isActive ? 'text-[#2A6877]' : 'text-gray-600'
             }`}
           >
-            Inicio
+            <span>Inicio</span>
+            <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-[#2A6877] transform origin-left transition-transform duration-300 ${
+              location.pathname === '/' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+            }`} />
           </NavLink>
           <NavLink 
             to="/especialistas" 
-            className={({isActive}) => `transition-colors font-sans text-md ${
-              isActive ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            className={({isActive}) => `transition-colors font-medium text-sm hover:text-[#2A6877] relative group ${
+              isActive ? 'text-[#2A6877]' : 'text-gray-600'
             }`}
           >
-            Especialistas
+            <span>Especialistas</span>
+            <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-[#2A6877] transform origin-left transition-transform duration-300 ${
+              location.pathname === '/especialistas' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+            }`} />
           </NavLink>
           <NavLink 
             to="/quienes-somos" 
-            className={({isActive}) => `transition-colors font-sans text-md ${
-              isActive ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            className={({isActive}) => `transition-colors font-medium text-sm hover:text-[#2A6877] relative group ${
+              isActive ? 'text-[#2A6877]' : 'text-gray-600'
             }`}
           >
-            Quiénes somos
+            <span>Quiénes somos</span>
+            <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-[#2A6877] transform origin-left transition-transform duration-300 ${
+              location.pathname === '/quienes-somos' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+            }`} />
           </NavLink>
           <NavLink 
             to="/contacto" 
-            className={({isActive}) => `transition-colors font-sans text-md ${
-              isActive ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
+            className={({isActive}) => `transition-colors font-medium text-sm hover:text-[#2A6877] relative group ${
+              isActive ? 'text-[#2A6877]' : 'text-gray-600'
             }`}
           >
-            Contacto
+            <span>Contacto</span>
+            <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-[#2A6877] transform origin-left transition-transform duration-300 ${
+              location.pathname === '/contacto' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+            }`} />
           </NavLink>
-          {renderAuthButtons()}
-        </div>
-      </div>
-
-      <div className={`${isMenuOpen ? 'block' : 'hidden'} lg:hidden`}>
-        <div className="px-4 pt-2 pb-4 space-y-3">
-          <a 
-            onClick={() => handleNavigation('/')} 
-            className={`block transition-colors font-sans text-md py-2 cursor-pointer ${
-              location.pathname === '/' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
-            }`}
-          >
-            Inicio
-          </a>
-          <a 
-            onClick={() => handleNavigation('/especialistas')} 
-            className={`block transition-colors font-sans text-md py-2 cursor-pointer ${
-              location.pathname === '/especialistas' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
-            }`}
-          >
-            Especialistas
-          </a>
-          <a 
-            onClick={() => handleNavigation('/quienes-somos')} 
-            className={`block transition-colors font-sans text-md py-2 cursor-pointer ${
-              location.pathname === '/quienes-somos' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
-            }`}
-          >
-            Quiénes somos
-          </a>
-          <a 
-            onClick={() => handleNavigation('/contacto')} 
-            className={`block transition-colors font-sans text-md py-2 cursor-pointer ${
-              location.pathname === '/contacto' ? 'text-[#2A6877] font-bold' : 'text-black hover:text-[#2A6877]'
-            }`}
-          >
-            Contacto
-          </a>
-          <div className="pt-4 space-y-2">
-            {renderMobileAuthButtons()}
+          <div className="flex items-center gap-4">
+            {renderAuthButtons()}
           </div>
         </div>
+
+        {/* Mobile menu */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="lg:hidden fixed top-[92px] left-0 right-0 border-t border-gray-100"
+            >
+              <div className="px-4 py-4 space-y-4 bg-white/95 backdrop-blur-sm">
+                <a 
+                  onClick={() => handleNavigation('/')} 
+                  className={`block transition-colors font-medium text-sm py-2 cursor-pointer ${
+                    location.pathname === '/' ? 'text-[#2A6877]' : 'text-gray-600 hover:text-[#2A6877]'
+                  }`}
+                >
+                  Inicio
+                </a>
+                <a 
+                  onClick={() => handleNavigation('/especialistas')} 
+                  className={`block transition-colors font-medium text-sm py-2 cursor-pointer ${
+                    location.pathname === '/especialistas' ? 'text-[#2A6877]' : 'text-gray-600 hover:text-[#2A6877]'
+                  }`}
+                >
+                  Especialistas
+                </a>
+                <a 
+                  onClick={() => handleNavigation('/quienes-somos')} 
+                  className={`block transition-colors font-medium text-sm py-2 cursor-pointer ${
+                    location.pathname === '/quienes-somos' ? 'text-[#2A6877]' : 'text-gray-600 hover:text-[#2A6877]'
+                  }`}
+                >
+                  Quiénes somos
+                </a>
+                <a 
+                  onClick={() => handleNavigation('/contacto')} 
+                  className={`block transition-colors font-medium text-sm py-2 cursor-pointer ${
+                    location.pathname === '/contacto' ? 'text-[#2A6877]' : 'text-gray-600 hover:text-[#2A6877]'
+                  }`}
+                >
+                  Contacto
+                </a>
+                <div className="pt-4 space-y-2">
+                  {renderMobileAuthButtons()}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );

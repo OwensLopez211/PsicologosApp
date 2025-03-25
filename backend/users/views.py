@@ -7,12 +7,12 @@ from .models import PsychologistDocuments
 from .serializers import PsychologistDocumentsSerializer
 from .permissions import IsAdminUser
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from .models import User
-from .serializers import UserSerializer
+from .serializers import UserSerializer, PsychologistSerializer
 
 @api_view(['POST'])
 def login_view(request):
@@ -75,3 +75,31 @@ class PsychologistDocumentsViewSet(viewsets.ModelViewSet):
         document.save()
 
         return Response(self.get_serializer(document).data)
+
+
+@api_view(['GET', 'PATCH'])
+@permission_classes([IsAuthenticated])
+def psychologist_profile(request):
+    try:
+        if request.method == 'PATCH':
+            # Remove email from request data if present
+            if 'email' in request.data:
+                request.data.pop('email')
+            
+            # Allow profile_image to be blank
+            if 'profile_image' in request.data and not request.data['profile_image']:
+                request.data['profile_image'] = None
+
+            serializer = PsychologistSerializer(request.user, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        # GET request handling
+        serializer = PsychologistSerializer(request.user)
+        return Response(serializer.data)
+            
+    except Exception as e:
+        print(f"Error updating profile: {str(e)}")
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)

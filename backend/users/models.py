@@ -8,13 +8,27 @@ class User(AbstractUser):
         ('ADMIN', 'Administrador'),
     )
     
+    GENDER_CHOICES = (
+        ('MALE', 'Masculino'),
+        ('FEMALE', 'Femenino'),
+        ('OTHER', 'Otro'),
+        ('PREFER_NOT_TO_SAY', 'Prefiero no decirlo'),
+    )
+    
     user_type = models.CharField(
         max_length=20,
         choices=USER_TYPE_CHOICES,
         default='CLIENT'
     )
     email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=15, blank=True)
+    phone = models.CharField(max_length=15, blank=True, null=True)
+    
+    # Basic Info fields
+    rut = models.CharField(max_length=12, blank=True, null=True)
+    gender = models.CharField(max_length=20, choices=GENDER_CHOICES, blank=True, null=True)
+    profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)
+    region = models.CharField(max_length=100, blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
     
     # Additional fields for psychologists
     specialization = models.CharField(max_length=100, blank=True)
