@@ -46,7 +46,7 @@ const LoginPage = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-gradient-to-b from-[#B4E4D3] to-white flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-b from-[#B4E4D3] to-white flex flex-col justify-center py-12 sm:px-6 lg:px-8 mt-[20px]">
         {/* Remove AnnouncementBar component from here */}
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <Link to="/" className="block relative group">

@@ -1,5 +1,7 @@
 import HeaderPage from '../components/HeaderPage';
 import PageTransition from '../components/PageTransition';
+import MissionSection from '../components/MissionSection';
+import ValuesSection from '../components/ValuesSection';
 
 const AboutPage = () => {
   return (
@@ -8,7 +10,8 @@ const AboutPage = () => {
         title="Quiénes Somos"
         description="Conectamos personas con psicólogos profesionales para una atención mental accesible, personalizada y efectiva."
       />
-      {/* Rest of about page content */}
+      <MissionSection />
+      <ValuesSection />
     </PageTransition>
   );
 };
