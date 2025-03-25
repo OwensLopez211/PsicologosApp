@@ -1,13 +1,16 @@
 import Hero from '../components/Hero'
-import Benefits from '../components/Benefits'
+import MobileHero from '../components/MobileHero'
 import HowItWorks from '../components/HowItWorks'
 import PsychologistCTA from '../components/PsychologistCTA'
 import PageTransition from '../components/PageTransition'
+import useScreenSize from '../hooks/useScreenSize'
 
 const HomePage = () => {
+  const { isMobile } = useScreenSize();
+
   return (
     <PageTransition>
-      <Hero />  
+      {isMobile ? <MobileHero /> : <Hero />}
       <HowItWorks />
       <PsychologistCTA />
     </PageTransition>

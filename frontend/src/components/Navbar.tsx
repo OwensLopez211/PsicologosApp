@@ -22,6 +22,7 @@ const Navbar = () => {
   const handleNavigation = (path: string) => {
     setIsMenuOpen(false);
     navigate(path);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const getDashboardLink = () => {
