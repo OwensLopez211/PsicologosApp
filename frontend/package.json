@@ -13,6 +13,7 @@
     "expose": "concurrently \"npm run expose:dev\" \"npm run expose:tunnel\""
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@phosphor-icons/react": "^2.1.7",
     "axios": "^1.8.4",

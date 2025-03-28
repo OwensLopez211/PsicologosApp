@@ -90,13 +90,19 @@ def psychologist_profile(request):
             if 'profile_image' in request.data and not request.data['profile_image']:
                 request.data['profile_image'] = None
 
+            # Handle JSON fields properly
+            for field in ['specialties', 'target_populations', 'intervention_areas']:
+                if field in request.data and not request.data[field]:
+                    request.data[field] = []
+
             serializer = PsychologistSerializer(request.user, data=request.data, partial=True)
             if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data)
+                updated_user = serializer.save()
+                # Return fresh data after update
+                return Response(PsychologistSerializer(updated_user).data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        # GET request handling
+        # GET request - ensure we return all fields
         serializer = PsychologistSerializer(request.user)
         return Response(serializer.data)
             

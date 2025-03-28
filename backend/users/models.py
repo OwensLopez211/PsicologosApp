@@ -36,6 +36,16 @@ class User(AbstractUser):
     bio = models.TextField(blank=True)
     hourly_rate = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     
+    # Professional Info fields
+    professional_title = models.CharField(max_length=100, blank=True, null=True)
+    specialties = models.JSONField(default=list, blank=True, null=True)
+    health_register_number = models.CharField(max_length=50, blank=True, null=True)
+    university = models.CharField(max_length=200, blank=True, null=True)
+    graduation_year = models.CharField(max_length=4, blank=True, null=True)
+    experience_description = models.TextField(blank=True, null=True)
+    target_populations = models.JSONField(default=list, blank=True, null=True)
+    intervention_areas = models.JSONField(default=list, blank=True, null=True)
+    
     # Fields for verification
     is_verified = models.BooleanField(default=False)
     verification_token = models.CharField(max_length=100, blank=True)

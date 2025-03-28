@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import PageTransition from '../components/PageTransition';
+import PageTransition from '../../components/public-components/PageTransition';
 import { useLocation } from 'react-router-dom';
 
 type UserType = 'patient' | 'psychologist' | null;

@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
@@ -97,10 +97,10 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed w-full transition-all duration-300 z-40 top-8 ${
+    <nav className={`fixed w-full transition-all duration-300 z-40 top-0 ${
       isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-lg' : 'bg-white/80'
     }`}>
-      <div className="container mx-auto flex justify-between items-center py-4 px-6">
+      <div className="container mx-auto flex justify-between items-center py-2 px-6">
         <Link to="/" className="flex items-center space-x-3">
           <img 
             src="/logo.jpeg" 

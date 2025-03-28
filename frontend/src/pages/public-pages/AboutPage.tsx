@@ -1,7 +1,7 @@
-import HeaderPage from '../components/HeaderPage';
-import PageTransition from '../components/PageTransition';
-import MissionSection from '../components/MissionSection';
-import ValuesSection from '../components/ValuesSection';
+import HeaderPage from '../../components/public-components/HeaderPage';
+import PageTransition from '../../components/public-components/PageTransition';
+import MissionSection from '../../components/public-components/MissionSection';
+import ValuesSection from '../../components/public-components/ValuesSection';
 
 const AboutPage = () => {
   return (

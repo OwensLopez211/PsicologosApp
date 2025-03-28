@@ -2,12 +2,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Layout from './components/Layout';
 import DashboardLayout from './components/dashboard/DashboardLayout';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import ContactPage from './pages/ContactPage';
-import AboutPage from './pages/AboutPage';
-import SpecialistPage from './pages/SpecialistPage';
+import HomePage from './pages/public-pages/HomePage';
+import LoginPage from './pages/public-pages/LoginPage';
+import RegisterPage from './pages/public-pages/RegisterPage';
+import ContactPage from './pages/public-pages/ContactPage';
+import AboutPage from './pages/public-pages/AboutPage';
+import SpecialistPage from './pages/public-pages/SpecialistPage';
+import SpecialistProfilePage from './pages/public-pages/SpecialistProfilePage';
 import DashboardHome from './pages/dashboard/DashboardHome';
 import ProfilePage from './pages/dashboard/ProfilePage';
 import SchedulePage from './pages/dashboard/SchedulePage';
@@ -39,6 +40,7 @@ function App() {
                 </PublicRoute>
               } />
               <Route path="/especialistas" element={<SpecialistPage />} />
+              <Route path="/especialistas/:id" element={<SpecialistProfilePage />} />
               <Route path="/quienes-somos" element={<AboutPage />} />
               <Route path="/contacto" element={<ContactPage />} />
             </Route>

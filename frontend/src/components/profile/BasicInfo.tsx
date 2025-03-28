@@ -212,7 +212,7 @@ const BasicInfo = ({ profile, onSave, isLoading }: BasicInfoProps) => {
               setFormData({
                 ...profile,
                 first_name: profile?.first_name || '',
-                last_name: profile?.last_name || '',
+                last_name: profile?.last_name || ''
                 // ... reset other fields
               });
             }}

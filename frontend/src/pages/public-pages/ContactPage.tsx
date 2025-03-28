@@ -1,6 +1,6 @@
-import HeaderPage from '../components/HeaderPage';
-import PageTransition from '../components/PageTransition';
-import ContactContainer from '../components/ContactContainer';
+import HeaderPage from '../../components/public-components/HeaderPage';
+import PageTransition from '../../components/public-components/PageTransition';
+import ContactContainer from '../../components/public-components/ContactContainer';
 
 const ContactPage = () => {
   return (

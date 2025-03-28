@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { getPsychologistProfile, updatePsychologistProfile } from '../../services/profileService';
 import BasicInfo from '../../components/profile/BasicInfo';
-import PageTransition from '../../components/PageTransition';
+import ProfessionalInfo from '../../components/profile/ProfessionalInfo';
+import PageTransition from '../../components/public-components/PageTransition';
+import ScheduleAndFees from '../../components/profile/ScheduleAndFees';
 
 const ProfilePage = () => {
   const { user } = useAuth();
@@ -40,6 +42,30 @@ const ProfilePage = () => {
       setProfile(updatedProfile);
     } catch (error) {
       console.error('Error updating profile:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSaveProfessionalInfo = async (data) => {
+    setIsLoading(true);
+    try {
+      const updatedProfile = await updatePsychologistProfile(data);
+      setProfile(updatedProfile);
+    } catch (error) {
+      console.error('Error updating professional info:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSaveSchedule = async (data) => {
+    setIsLoading(true);
+    try {
+      const updatedProfile = await updatePsychologistProfile(data);
+      setProfile(updatedProfile);
+    } catch (error) {
+      console.error('Error updating schedule:', error);
     } finally {
       setIsLoading(false);
     }
@@ -119,15 +145,19 @@ const ProfilePage = () => {
           )}
           
           {activeTab === 'professional' && (
-            <div>
-              {/* Professional Information Form will go here */}
-            </div>
+            <ProfessionalInfo
+              profile={profile}
+              onSave={handleSaveProfessionalInfo}
+              isLoading={isLoading}
+            />
           )}
           
           {activeTab === 'schedule' && (
-            <div>
-              {/* Schedule and Fees Form will go here */}
-            </div>
+            <ScheduleAndFees
+              profile={profile}
+              onSave={handleSaveSchedule}
+              isLoading={isLoading}
+            />
           )}
           
           {activeTab === 'documents' && (

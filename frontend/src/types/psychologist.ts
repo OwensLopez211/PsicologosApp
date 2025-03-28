@@ -43,49 +43,47 @@ export interface BasicProfileData {
 }
 
 export interface PsychologistProfile {
-  id: string;
-  userId: string;
-  firstName: string;
-  lastName: string;
-  profileImage: string;
-  rut?: string;
-  gender?: Gender;
+  // Basic fields
+  firstName?: string;
+  first_name?: string;
+  lastName?: string;
+  last_name?: string;
   email: string;
   phone: string;
+  rut: string;
+  gender: string;
+  profileImage?: string;
+  profile_image?: string;
   region: string;
   city: string;
-  
-  // Professional Data
-  professionalTitle: string;
-  healthRegistrationNumber?: string;
-  specialties: string[];
-  education: Education[];
-  yearsOfExperience: number;
-  
-  // Attention Details
-  attentionType: AttentionType;
-  languages: string[];
-  schedule: Schedule[];
-  
-  // Fees and Payment
-  sessionFees: SessionFee[];
-  acceptedPaymentMethods: PaymentMethod[];
-  
-  // Profile Content
-  biography: string;
-  
-  // Reviews
-  reviews: Review[];
-  averageRating: number;
-  
-  // Verification
-  verifiedDocuments: {
+
+  // Professional info fields
+  professional_title?: string;
+  specialties?: string[];
+  health_register_number?: string;
+  university?: string;
+  graduation_year?: string;
+  experience_description?: string;
+  target_populations?: string[];
+  intervention_areas?: string[];
+
+  // Additional fields
+  education?: Education[];
+  yearsOfExperience?: number;
+  attentionType?: AttentionType;
+  languages?: string[];
+  schedule?: Schedule[];
+  sessionFees?: SessionFee[];
+  acceptedPaymentMethods?: PaymentMethod[];
+  biography?: string;
+  reviews?: Review[];
+  averageRating?: number;
+  verifiedDocuments?: {
     professionalDegree: boolean;
     healthRegistration: boolean;
     civilLiability: boolean;
   };
-  
-  isActive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  isActive?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
